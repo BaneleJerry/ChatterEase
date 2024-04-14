@@ -1,15 +1,28 @@
+// App.js
+import { useState, useEffect } from "react";
 import { connect, sendMsg } from "./api";
+import Header from "./Components/header/header";
+import ChatHistory from "./Components/chatHistory/chatHistory";
 
 function App() {
-  connect();
+  const [chatHistory, setChatHistory] = useState([]);
 
-  var send = () => {
+  useEffect(() => {
+    connect((msg) => {
+      console.log("New Message");
+      setChatHistory((prevChatHistory) => [...prevChatHistory, msg]);
+    });
+  }, []);
+
+  const send = () => {
     sendMsg("HELLO");
   };
 
   return (
-    <div>
-      <button onClick={send}>Hit</button>
+    <div className="App">
+      <Header />
+      <ChatHistory chatHistory={chatHistory} />
+      <button onClick={send}>Send</button>
     </div>
   );
 }

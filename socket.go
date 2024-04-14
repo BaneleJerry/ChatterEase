@@ -32,3 +32,17 @@ func reader(conn *websocket.Conn) {
 		}
 	}
 }
+
+func serveWs(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r.Host)
+
+	// upgrade this connection to a WebSocket
+	// connection
+	ws, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Println(err)
+	}
+	// listen indefinitely for new messages coming
+	// through on our WebSocket connection
+	reader(ws)
+}

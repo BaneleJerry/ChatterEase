@@ -31,8 +31,8 @@ func (cfg *apiConfig) apiRun() {
 	}).Methods("GET")
 
 	router.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
-		serveWs(w, r)
-	}).Methods("GET")
+        serveWs(w, r)
+    }).Methods("GET")
 
 	//routing End/Up
 	corsMux := middlewareCors(router)
