@@ -3,3 +3,6 @@ build:
 
 run:build
 	@./bin/chatterEase
+
+start:
+	@cd webapp && npm start
