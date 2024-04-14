@@ -30,6 +30,10 @@ func (cfg *apiConfig) apiRun() {
 		w.Write([]byte("Hello"))
 	}).Methods("GET")
 
+	router.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+		serveWs(w, r)
+	}).Methods("GET")
+
 	//routing End/Up
 	corsMux := middlewareCors(router)
 	srv := &http.Server{
@@ -55,9 +59,3 @@ func middlewareCors(next http.Handler) http.Handler {
 		next.ServeHTTP(w, r)
 	})
 }
-
-// func (cfg *apiConfig) validateSession(w http.ResponseWriter, r *http.Request) {
-// 	user := cfg.authCheck(w, r)
-// 	tokenString := r.Header.Get("Authorization")
-// 	respondWithJSON(w, http.StatusOK, databaseUserToUser(user, tokenString))
-// }
